@@ -1,0 +1,92 @@
+<div class="container-fluid col-md-6">
+  <h3 *ngIf="!isEditing" class="text-center lead">Add Member to Racing Team</h3>
+  <h3 *ngIf="isEditing" class="text-center lead">Edit Existing Member</h3>
+  <br />
+  <div *ngIf="loadingTeams">
+    Getting teams...
+  </div>
+  <form *ngIf="!loadingTeams" [formGroup]="memberForm" (ngSubmit)="onSubmit(memberForm)">
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            placeholder="First Name"
+            formControlName="firstName"
+          />
+          <small 
+            class="form-text text-muted" 
+            *ngIf="!memberForm.get('firstName').valid && memberForm.get('firstName').touched"
+          >
+            Please enter a first name!
+          </small>
+        </div>
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            placeholder="Last Name"
+            formControlName="lastName"
+          />
+          <small 
+            class="form-text text-muted" 
+            *ngIf="!memberForm.get('lastName').valid && memberForm.get('lastName').touched"
+          >
+            Please enter a last name!
+          </small>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            id="jobTitle"
+            placeholder="Job Title"
+            formControlName="jobTitle"
+          />
+          <small 
+            class="form-text text-muted" 
+            *ngIf="!memberForm.get('jobTitle').valid && memberForm.get('jobTitle').touched"
+          >
+            Please enter a job title!
+          </small>
+        </div>
+        <!--We may have to make a service call to get this list-->
+        <select 
+          id="team" 
+          class="col-md-6 custom-select" 
+          formControlName="team"
+        >
+          <option *ngFor="let team of teams" [selected]="memberModel !== null ? team.teamName === memberModel.team : null">{{ team.teamName }}</option>
+        </select>
+      </div>
+      <br />
+      <div class="form-group col-md-6">
+        <div class="row">
+          <label id="activeStatus" class="md-check lead">
+            <input type="radio" value="Active" name="status" formControlName="status" /> Active
+          </label>
+          <label class="md-check lead">
+            <input type="radio" value="Inactive" name="status" formControlName="status" /> Inactive
+          </label>
+        </div>
+      </div>
+    </div>
+    <!--Disable if form is invalid-->
+    <button class="btn btn-secondary" type="button" (click)="goToMembersPage()">
+      Cancel
+    </button>
+    <!--Different submit buttons if the form is editing an existing or adding new member-->
+    <button *ngIf="!isEditing" type="submit" class="btn btn-primary pull-right" [disabled]="!memberForm.valid">
+      Save Member
+    </button>
+    <button *ngIf="isEditing" type="submit" class="btn btn-primary pull-right" [disabled]="!memberForm.valid">
+      Update Member
+    </button>
+  </form>
+</div>

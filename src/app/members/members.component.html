@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <button id="addMemberButton" class="btn btn-primary pull-right" (click)="goToAddMemberForm()">Add Member</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Member ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Job Title</th>
+        <th>Racing Team</th>
+        <th>Status</th>
+        <th>Edit / Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let member of members'>
+        <td>{{member?.id}}</td>
+        <td>{{member?.firstName}}</td>
+        <td>{{member?.lastName}}</td>
+        <td>{{member?.jobTitle}}</td>
+        <td>{{member?.team}}</td>
+        <td>{{member?.status}}</td>
+        <td>
+          <button class="btn btn-primary mr-1" (click)="editMemberById(member.id)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteMemberById(member.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
